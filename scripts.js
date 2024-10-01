@@ -23,6 +23,7 @@ function openModal(event) {
     let populationElement = document.getElementById('planet-population');
     let terrainElement = document.getElementById('planet-terrain');
     let climateElement = document.getElementById('planet-climate');
+    let residentsElement = document.getElementById('planet-residents');
 
     const clickedPlanetName = event.target.innerHTML;
 
@@ -32,6 +33,20 @@ function openModal(event) {
     populationElement.innerHTML = planetInfo.population;
     terrainElement.innerHTML = planetInfo.terrain;
     climateElement.innerHTML = planetInfo.climate;
+
+    residentsElement.innerHTML = '<p>Residentes:</p>';
+    const residentsArray = planetInfo.residents;
+    residentsArray.forEach(async (resident) => {
+        const residentInfo = await getResidentInfo(resident);
+
+        console.log(residentInfo);
+        const { name, birth_year } = residentInfo;
+
+        const residentParagraph = document.createElement('p');
+        residentParagraph.innerHTML = `<p>- ${name}, <span>nascido(a) em: ${birth_year}</span></p>`;
+
+        residentsElement.appendChild(residentParagraph);
+    });
 
     modalElement.showModal();
 }
@@ -58,6 +73,13 @@ function renderPlanets() {
         listItem.appendChild(planetButton);
         planetListUL.appendChild(listItem);
     });
+}
+
+async function getResidentInfo(residentURL) {
+    const fetchResult = await fetch(residentURL);
+    const residentInfo = await fetchResult.json();
+
+    return residentInfo;
 }
 
 getPlanets();
