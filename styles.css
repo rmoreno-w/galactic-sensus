@@ -43,8 +43,49 @@ button {
     background: #e6af2e;
     color: #2d2d2a;
     height: 48px;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 button:hover {
     cursor: pointer;
+}
+
+dialog {
+    position: relative;
+
+    background: #fafafa;
+    border-radius: 0.5rem;
+    padding: 2rem;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+dialog:not([open]) {
+    display: none;
+}
+
+dialog[open] {
+    display: block;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    gap: 16px;
+}
+
+p {
+    font-weight: bold;
+}
+
+span {
+    font-weight: normal;
 }
