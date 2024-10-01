@@ -8,7 +8,11 @@ async function getPlanets() {
 
     const planets = result.results;
 
-    console.log(planets);
+    planets.forEach((planet) => {
+        const planetButton = document.createElement('button');
+        planetButton.innerHTML = planet.name;
+        planetList.appendChild(planetButton); // console.log(planet);
+    });
 }
 
 getPlanets();
