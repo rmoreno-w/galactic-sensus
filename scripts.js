@@ -1,6 +1,7 @@
 const planetListUL = document.getElementById('planet-list');
 let modalElement = document.getElementById('modal');
 let planetListArray = [];
+let planetsToRenderArray = [];
 
 async function getPlanets() {
     const planetsURL = 'https://swapi.dev/api/planets/';
@@ -10,16 +11,11 @@ async function getPlanets() {
 
     const planets = result.results;
     planets.forEach((planet) => {
-        const planetButton = document.createElement('button');
-        planetButton.innerHTML = planet.name;
-        planetButton.addEventListener('click', openModal);
-
-        const listItem = document.createElement('li');
-        listItem.appendChild(planetButton);
-        planetListUL.appendChild(listItem); // console.log(planet);
-
         planetListArray.push(planet);
+        planetsToRenderArray.push(planet);
     });
+
+    renderPlanets();
 }
 
 function openModal(event) {
@@ -38,6 +34,30 @@ function openModal(event) {
     climateElement.innerHTML = planetInfo.climate;
 
     modalElement.showModal();
+}
+
+function onPlanetSearch() {
+    const inputValue = document.getElementById('search-field').value;
+
+    planetsToRenderArray = planetListArray.filter((planet) =>
+        planet.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    renderPlanets();
+}
+
+function renderPlanets() {
+    planetListUL.innerHTML = '';
+
+    planetsToRenderArray.forEach((planet) => {
+        const planetButton = document.createElement('button');
+        planetButton.innerHTML = planet.name;
+        planetButton.addEventListener('click', openModal);
+
+        const listItem = document.createElement('li');
+        listItem.appendChild(planetButton);
+        planetListUL.appendChild(listItem);
+    });
 }
 
 getPlanets();

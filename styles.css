@@ -35,7 +35,7 @@ h2 {
 
 ul {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
@@ -88,4 +88,17 @@ p {
 
 span {
     font-weight: normal;
+}
+
+#planet-search {
+    border: solid 1px #e6af2e;
+    max-width: 50%;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+input {
+    height: 36px;
+    margin-left: 8px;
+    padding: 4px;
 }
