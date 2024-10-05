@@ -10,6 +10,7 @@ async function getPlanets() {
     const result = await fetchResult.json();
 
     const planets = result.results;
+    console.log(planets);
     planets.forEach((planet) => {
         planetListArray.push(planet);
         planetsToRenderArray.push(planet);
@@ -30,7 +31,7 @@ function openModal(event) {
     const planetInfo = planetListArray.find((planet) => planet.name == clickedPlanetName);
 
     nameElement.innerHTML = planetInfo.name;
-    populationElement.innerHTML = planetInfo.population;
+    populationElement.innerHTML = `${new Intl.NumberFormat('pt-BR', {}).format(planetInfo.population)} habitantes.`;
     terrainElement.innerHTML = planetInfo.terrain;
     climateElement.innerHTML = planetInfo.climate;
 
@@ -43,7 +44,9 @@ function openModal(event) {
         const { name, birth_year } = residentInfo;
 
         const residentParagraph = document.createElement('p');
-        residentParagraph.innerHTML = `<p>- ${name}, <span>nascido(a) em: ${birth_year}</span></p>`;
+        residentParagraph.innerHTML = `<p>- ${name}, <span>nascido(a) em: ${
+            birth_year !== 'unknown' ? birth_year : 'Data de nascimento desconhecida'
+        }</span></p>`;
 
         residentsElement.appendChild(residentParagraph);
     });
